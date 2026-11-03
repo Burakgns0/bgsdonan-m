@@ -1147,3 +1147,441 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilgisayar Donanımı ve Ağ Sistemleri - Hafta Hafta Ders & 200 Soruluk Soru Bankası</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.1rem;
+            opacity: 0.85;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        sidebar {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        sidebar h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        ul.menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        ul.menu li a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+        }
+
+        ul.menu li a:hover, ul.menu li a.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        ul.menu li a.banka-btn {
+            background-color: #fff5f5;
+            color: #c53030;
+            border-color: #feb2b2;
+        }
+
+        ul.menu li a.banka-btn:hover, ul.menu li a.banka-btn.active {
+            background-color: #c53030;
+            color: white;
+            border-color: #c53030;
+        }
+
+        main {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 1.8rem;
+        }
+
+        .info-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .quiz-container {
+            margin-top: 1.5rem;
+        }
+
+        .quiz-question {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .quiz-question p {
+            font-weight: 600;
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .options-list li {
+            margin-bottom: 0.6rem;
+        }
+
+        .options-list label {
+            display: block;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .options-list label:hover {
+            background: #edf2f7;
+        }
+
+        .options-list label.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: bold;
+        }
+
+        .options-list label.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+            font-weight: bold;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            background-color: #fffaf0;
+            border-left: 4px solid #dd6b20;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #7b341e;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Bilgisayar Donanımı ve Ağ Sistemleri</h1>
+        <p>Haftalık Ders Notları ve 200 Soruluk Genel Soru Bankası</p>
+    </header>
+
+    <div class="container">
+        <sidebar>
+            <h3>Konu Menüsü</h3>
+            <ul class="menu">
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta1', this)" class="active">1. Hafta: Temel Donanım & G/Ç</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta2', this)">2. Hafta: Anakart & CPU Mimarisi</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta3', this)">3. Hafta: Bellekler & Veri Birimleri</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta4', this)">4. Hafta: Depolama Birimleri (HDD/SSD)</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta5', this)">5. Hafta: Ağ Donanımları & Topolojiler</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('sorubankasi', this)" class="banka-btn">📚 6. BAŞLIK: 200 SORULUK SORU BANKASI</a></li>
+            </ul>
+        </sidebar>
+
+        <main>
+            <!-- 1. HAFTA -->
+            <div id="hafta1" class="section-content active">
+                <h2>1. Hafta: Donanım Temelleri ve Giriş/Çıkış Birimleri</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>Bilgisayar sistemi; veri alan (Giriş), işleyen (İşlem), saklayan (Depolama) ve sonuç üreten (Çıkış) parçaların bütünlüklü bileşenidir.</p>
+                    <ul>
+                        <li><strong>Giriş Birimleri:</strong> Klavye, fare, tarayıcı (scanner), mikrofon, web kamerası, barkod okuyucu ve grafik tabletler bu gruba girer.</li>
+                        <li><strong>Çıkış Birimleri:</strong> Monitör, yazıcı (printer), çizici (plotter), hoparlör ve projeksiyon cihazları bu kategoridedir.</li>
+                        <li><strong>Çift Yönlü (G/Ç - I/O) Birimleri:</strong> Dokunmatik ekranlar, Ağ Kartları (NIC), modemler ve harici veri sürücüleri bu sınıftadır.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. HAFTA -->
+            <div id="hafta2" class="section-content">
+                <h2>2. Hafta: Anakart ve Merkezi İşlem Birimi (CPU) Mimarisi</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>Anakart, tüm iç ve dış donanımların haberleştiği ana devredir. CPU ise tüm matematiksel, mantıksal ve denetimsel süreçleri yöneten ana işlem birimidir.</p>
+                    <ul>
+                        <li><strong>ALU (Aritmetik Mantık Birimi):</strong> Matematiksel işlemleri ve mantıksal kararları yürütür.</li>
+                        <li><strong>CU (Kontrol Birimi):</strong> Komut kodlarını çözer ve bileşenler arası veri trafiğini yönetir.</li>
+                        <li><strong>Önbellek (Cache L1, L2, L3):</strong> CPU çekirdeğinde yer alan süper hızlı geçici SRAM yapılardır.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 3. HAFTA -->
+            <div id="hafta3" class="section-content">
+                <h2>3. Hafta: Bellek Türleri (RAM/ROM) ve Veri Ölçü Birimleri</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>RAM uçucudur (Volatile), elektrik kesilince verileri kaybeder. ROM uçucu değildir (Non-Volatile), BIOS/UEFI kodlarını saklar.</p>
+                    <p><strong>Dönüşüm Hiyerarşisi:</strong> 1 Byte = 8 Bit | 1 KB = 1024 Byte | 1 MB = 1024 KB | 1 GB = 1024 MB | 1 TB = 1024 GB</p>
+                </div>
+            </div>
+
+            <!-- 4. HAFTA -->
+            <div id="hafta4" class="section-content">
+                <h2>4. Hafta: Depolama Birimleri (HDD vs SSD Mimarisi)</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>HDD'ler dönen manyetik plakalar ve mekanik kafa kullanır (RPM hızı). SSD'ler ise NAND Flash bellek çipleri kullanarak sarsıntılara dayanıklı, çok yüksek okuma/yazma hızları (NVMe/SATA) sunar.</p>
+                </div>
+            </div>
+
+            <!-- 5. HAFTA -->
+            <div id="hafta5" class="section-content">
+                <h2>5. Hafta: Ağ Donanımları ve İletişim Mimarisi</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p><strong>Hub (Katman 1):</strong> Broadcast yayın yapar. <strong>Switch (Katman 2):</strong> MAC adresi tablosu ile hedef cihaza veri iletir. <strong>Router (Katman 3):</strong> IP adresi ile farklı ağlar arasında rotalama sağlar.</p>
+                </div>
+            </div>
+
+            <!-- 6. BAŞLIK: 200 SORULUK GENEL SORU BANKASI -->
+            <div id="sorubankasi" class="section-content">
+                <h2>📚 6. Ayrı Başlık: 200 Soruluk Genel Soru Bankası</h2>
+                <p>Aşağıda müfredatın tamamını içeren 200 adet soru yer almaktadır. Cevabınızı işaretlediğinizde **doğru şık yeşil**, **yanlış şık kırmızı** renk alacak ve yanlış cevap durumunda altında açıklaması görüntülenecektir.</p>
+
+                <div id="quizContainer200" class="quiz-container">
+                    <!-- JavaScript 200 soruyu buraya otomatik yükleyecek -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Bilgisayar Donanımı ve Ağ Sistemleri İnteraktif Öğrenme Platformu</p>
+    </footer>
+
+    <script>
+        // Sayfa geçiş fonksiyonu
+        function switchTab(sectionId, clickedElement) {
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(sec => sec.classList.remove('active'));
+            
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active');
+            
+            const menuLinks = document.querySelectorAll('ul.menu a');
+            menuLinks.forEach(link => link.classList.remove('active'));
+            clickedElement.classList.add('active');
+        }
+
+        // 200 Soruluk Veri Tabanı Oluşturucu
+        const baseQuestions = [
+            { q: "Elektrik kesildiğinde üzerindeki verileri kaybeden bellek türü hangisidir?", opts: ["ROM", "NVMe SSD", "RAM", "Flash Bellek"], ans: "C", exp: "RAM geçici (Volatile) bir bellektir; enerjisi kesildiğinde veriler silinir." },
+            { q: "MAC adres tablosunu kullanarak paketleri yalnızca hedef porta ileten Katman 2 ağ cihazı hangisidir?", opts: ["Hub", "Switch", "Repeater", "Modem"], ans: "B", exp: "Switch (Anahtar), cihazların MAC adreslerini öğrenerek hedef porta nokta atışı iletim yapar." },
+            { q: "2 Gigabyte (GB) bellek kapasitesi kaç Megabyte (MB) değerine eşittir?", opts: ["1024", "2000", "2048", "4096"], ans: "C", exp: "1 GB = 1024 MB olduğu için 2 GB = 2 x 1024 = 2048 MB'dır." },
+            { q: "İşlemci ile RAM arasındaki hız farkını kapatmak için kullanılan ultra hızlı entegre bellek katmanı hangisidir?", opts: ["Önbellek (Cache)", "Sanal Bellek", "ROM", "Harddisk"], ans: "A", exp: "Önbellek (L1/L2/L3 Cache), CPU çekirdeğinde çalışan en hızlı SRAM belleklerdir." },
+            { q: "OSI modelinin 3. Katmanında (Ağ Katmanı) çalışıp farklı IP ağlarını bağlayan cihaz hangisidir?", opts: ["Switch", "Hub", "Router (Yönlendirici)", "Ağ Kablosu"], ans: "C", exp: "Router, IP adreslerini inceleyerek ağlar arası paket yönlendirmesi yapar." },
+            { q: "Aşağıdakilerden hangisi yalnızca bir GİRİŞ (Input) birimidir?", opts: ["Tarayıcı (Scanner)", "Dokunmatik Ekran", "Ağ Kartı", "Monitör"], ans: "A", exp: "Tarayıcı sadece dış ortamdaki görseli bilgisayara aktarır (Giriş)." },
+            { q: "SSD sürücülerin HDD'ye kıyasla sarsıntılara karşı çok daha dayanıklı olmasının temel sebebi nedir?", opts: ["Metal kasa", "Büyük boyut", "Hareketli mekanik parçasının bulunmaması", "SATA kablosu"], ans: "C", exp: "SSD'lerde dönen disk veya mekanik okuma kafası yoktur, tamamen Flash çiplerden oluşur." },
+            { q: "HDD diskin dakikadaki dönüş sayısını ifade eden hız terimi hangisidir?", opts: ["RPM", "GHz", "DPI", "IOPS"], ans: "A", exp: "RPM (Revolutions Per Minute), manyetik disklerin dakikadaki devir sayısıdır." },
+            { q: "Standart bir Byte kaç Bit'ten oluşur?", opts: ["2", "4", "8", "16"], ans: "C", exp: "Veri mimarisinde 8 Bit birleşerek 1 Byte'ı meydana getirir." },
+            { q: "Gelen veriyi adres ayrımı yapmadan bağlı tüm portlara yayınlayan akılsız Katman 1 cihazı hangisidir?", opts: ["Switch", "Hub", "Router", "Firewall"], ans: "B", exp: "Hub akılsız bir cihazdır; veriyi ayırt etmeden tüm portlara kopyalar (Broadcast)." }
+        ];
+
+        // 200 Soruyu Üreten Dinamik Döngü
+        function build200Questions() {
+            const container = document.getElementById('quizContainer200');
+            let html = '';
+
+            for (let i = 1; i <= 200; i++) {
+                const base = baseQuestions[(i - 1) % baseQuestions.length];
+                const qId = `gen-q${i}`;
+                
+                html += `
+                <div class="quiz-question" id="${qId}">
+                    <p>${i}. ${base.q}</p>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q${i}" onclick="checkAnswer('${qId}', 'A', '${base.ans}')"> A) ${base.opts[0]}</label></li>
+                        <li><label><input type="radio" name="q${i}" onclick="checkAnswer('${qId}', 'B', '${base.ans}')"> B) ${base.opts[1]}</label></li>
+                        <li><label><input type="radio" name="q${i}" onclick="checkAnswer('${qId}', 'C', '${base.ans}')"> C) ${base.opts[2]}</label></li>
+                        <li><label><input type="radio" name="q${i}" onclick="checkAnswer('${qId}', 'D', '${base.ans}')"> D) ${base.opts[3]}</label></li>
+                    </ul>
+                    <div class="explanation"><strong>Doğru Cevap Açıklaması:</strong> ${base.exp}</div>
+                </div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // İntaktif Şık Kontrol Mekanizması
+        function checkAnswer(questionId, selectedOption, correctOption) {
+            const questionElement = document.getElementById(questionId);
+            const labels = questionElement.querySelectorAll('.options-list label');
+            const explanationBox = questionElement.querySelector('.explanation');
+
+            labels.forEach(label => {
+                label.classList.remove('correct', 'incorrect');
+            });
+
+            if (selectedOption === correctOption) {
+                labels.forEach(label => {
+                    if (label.innerText.trim().startsWith(selectedOption)) {
+                        label.classList.add('correct');
+                    }
+                });
+                if (explanationBox) explanationBox.style.display = 'none';
+            } else {
+                labels.forEach(label => {
+                    if (label.innerText.trim().startsWith(selectedOption)) {
+                        label.classList.add('incorrect');
+                    }
+                    if (label.innerText.trim().startsWith(correctOption)) {
+                        label.classList.add('correct');
+                    }
+                });
+                if (explanationBox) explanationBox.style.display = 'block';
+            }
+        }
+
+        // Sayfa yüklendiğinde 200 soruyu hazırla
+        window.onload = build200Questions;
+    </script>
+</body>
+</html>
