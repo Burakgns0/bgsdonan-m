@@ -1,0 +1,1149 @@
+```html
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilgisayar Donanımı ve Ağ Sistemleri - Hafta Hafta Ders & Soru Bankası</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.1rem;
+            opacity: 0.85;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        sidebar {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        sidebar h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        ul.menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        ul.menu li a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+        }
+
+        ul.menu li a:hover, ul.menu li a.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        ul.menu li a.banka-btn {
+            background-color: #fff5f5;
+            color: #c53030;
+            border-color: #feb2b2;
+        }
+
+        ul.menu li a.banka-btn:hover, ul.menu li a.banka-btn.active {
+            background-color: #c53030;
+            color: white;
+            border-color: #c53030;
+        }
+
+        main {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 1.8rem;
+        }
+
+        .info-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .quiz-container {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px dashed var(--border-color);
+        }
+
+        .quiz-question {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .quiz-question p {
+            font-weight: 600;
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .options-list li {
+            margin-bottom: 0.6rem;
+        }
+
+        .options-list label {
+            display: block;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .options-list label:hover {
+            background: #edf2f7;
+        }
+
+        .options-list label.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: bold;
+        }
+
+        .options-list label.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+            font-weight: bold;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            background-color: #fffaf0;
+            border-left: 4px solid #dd6b20;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #7b341e;
+        }
+
+        details {
+            background: #edf2f7;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Bilgisayar Donanımı ve Ağ Sistemleri</h1>
+        <p>Haftalık Modüler Ders Notları ve Genel Soru Bankası</p>
+    </header>
+
+    <div class="container">
+        <sidebar>
+            <h3>Konu Menüsü</h3>
+            <ul class="menu">
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta1', this)" class="active">1. Hafta: Temel Donanım & G/Ç</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta2', this)">2. Hafta: Anakart & CPU Mimarisi</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta3', this)">3. Hafta: Bellekler & Veri Birimleri</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta4', this)">4. Hafta: Depolama Birimleri (HDD/SSD)</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('hafta5', this)">5. Hafta: Ağ Donanımları & Topolojiler</a></li>
+                <li><a href="javascript:void(0)" onclick="switchTab('sorubankasi', this)" class="banka-btn">📚 6. BAŞLIK: GENEL SORU BANKASI</a></li>
+            </ul>
+        </sidebar>
+
+        <main>
+            <!-- 1. HAFTA -->
+            <div id="hafta1" class="section-content active">
+                <h2>1. Hafta: Donanım Temelleri ve Giriş/Çıkış Birimleri</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>Bilgisayar sistemi; veri alan (Giriş), işleyen (İşlem), saklayan (Depolama) ve sonuç üreten (Çıkış) parçaların bütünlüklü bileşenidir.</p>
+                    <ul>
+                        <li><strong>Giriş Birimleri:</strong> Kullanıcıdan veya dış ortamdan bilgisayara veri aktarımını sağlar. Klavye, fare, tarayıcı (scanner), mikrofon, web kamerası, barkod okuyucu ve grafik tabletler bu gruba girer.</li>
+                        <li><strong>Çıkış Birimleri:</strong> İşlenen verileri kullanıcının algılayabileceği biçime dönüştürür. Monitör, yazıcı (printer), çizici (plotter), hoparlör ve projeksiyon cihazları bu kategoridedir.</li>
+                        <li><strong>Çift Yönlü (G/Ç - I/O) Birimleri:</strong> Hem veri kabul eden hem de veri gönderen donanımlardır. Dokunmatik ekranlar, Ağ Kartları (NIC), modemler ve harici veri sürücüleri bu sınıftadır.</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-container">
+                    <h3>📝 1. Hafta Konu Testi (10 Soru)</h3>
+
+                    <div class="quiz-question" id="h1-q1">
+                        <p>1. Aşağıdakilerden hangisi yalnızca bir GİRİŞ (Input) birimidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q1" onclick="checkAnswer('h1-q1', 'A', 'A')"> A) Tarayıcı (Scanner)</label></li>
+                            <li><label><input type="radio" name="h1q1" onclick="checkAnswer('h1-q1', 'B', 'A')"> B) Dokunmatik Ekran</label></li>
+                            <li><label><input type="radio" name="h1q1" onclick="checkAnswer('h1-q1', 'C', 'A')"> C) Ağ Kartı (NIC)</label></li>
+                            <li><label><input type="radio" name="h1q1" onclick="checkAnswer('h1-q1', 'D', 'A')"> D) Monitör</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Tarayıcı yalnızca dış ortamdaki görüntüyü dijital veriye dönüştürür (Giriş). Dokunmatik ekran ve NIC hem giriş hem çıkıştır; monitör ise çıkış birimidir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q2">
+                        <p>2. Basılı belgeleri veya mimari çizimleri yüksek kalitede kağıda aktarmak için kullanılan özel ÇIKIŞ birimi hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q2" onclick="checkAnswer('h1-q2', 'A', 'C')"> A) Tarayıcı</label></li>
+                            <li><label><input type="radio" name="h1q2" onclick="checkAnswer('h1-q2', 'B', 'C')"> B) Grafik Tablet</label></li>
+                            <li><label><input type="radio" name="h1q2" onclick="checkAnswer('h1-q2', 'C', 'C')"> C) Çizici (Plotter)</label></li>
+                            <li><label><input type="radio" name="h1q2" onclick="checkAnswer('h1-q2', 'D', 'C')"> D) Barkod Okuyucu</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Çiziciler (Plotter), özellikle mühendislik ve mimari çizim çıktılarını almak için tasarlanmış gelişmiş çıkış birimleridir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q3">
+                        <p>3. Aşağıdakilerden hangisi çift yönlü (Hem Giriş hem Çıkış) çalışan bir donanım birimidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q3" onclick="checkAnswer('h1-q3', 'A', 'B')"> A) Hoparlör</label></li>
+                            <li><label><input type="radio" name="h1q3" onclick="checkAnswer('h1-q3', 'B', 'B')"> B) Modem</label></li>
+                            <li><label><input type="radio" name="h1q3" onclick="checkAnswer('h1-q3', 'C', 'B')"> C) Klavye</label></li>
+                            <li><label><input type="radio" name="h1q3" onclick="checkAnswer('h1-q3', 'D', 'B')"> D) Mikrofon</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Modem veriyi hem alır (Giriş) hem de ağa iletir (Çıkış). Bu nedenle G/Ç birimidir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q4">
+                        <p>4. Bilgisayar mimarisinde verilerin işlendiği ana süreç sırası aşağıdakilerden hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q4" onclick="checkAnswer('h1-q4', 'A', 'A')"> A) Giriş &rarr; İşlem &rarr; Depolama / Çıkış</label></li>
+                            <li><label><input type="radio" name="h1q4" onclick="checkAnswer('h1-q4', 'B', 'A')"> B) Çıkış &rarr; İşlem &rarr; Giriş</label></li>
+                            <li><label><input type="radio" name="h1q4" onclick="checkAnswer('h1-q4', 'C', 'A')"> C) Depolama &rarr; Giriş &rarr; Çıkış</label></li>
+                            <li><label><input type="radio" name="h1q4" onclick="checkAnswer('h1-q4', 'D', 'A')"> D) İşlem &rarr; Giriş &rarr; Depolama</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Temel veri işleme adımı: Veri alınır (Giriş), işlenir (İşlem) ve kaydedilip/sunulur (Depolama/Çıkış).</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q5">
+                        <p>5. Fiziksel bir belgedeki resim veya yazıları dijital veri haline getiren birim hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q5" onclick="checkAnswer('h1-q5', 'A', 'B')"> A) Projeksiyon</label></li>
+                            <li><label><input type="radio" name="h1q5" onclick="checkAnswer('h1-q5', 'B', 'B')"> B) Tarayıcı (Scanner)</label></li>
+                            <li><label><input type="radio" name="h1q5" onclick="checkAnswer('h1-q5', 'C', 'B')"> C) Yazıcı (Printer)</label></li>
+                            <li><label><input type="radio" name="h1q5" onclick="checkAnswer('h1-q5', 'D', 'B')"> D) Monitör</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Tarayıcılar kağıt üzerindeki görsel veya metinleri tarayarak bilgisayara veri girdisi sağlar.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q6">
+                        <p>6. Ses dalgalarını elektrik sinyallerine dönüştürerek bilgisayara aktaran donanım hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q6" onclick="checkAnswer('h1-q6', 'A', 'C')"> A) Hoparlör</label></li>
+                            <li><label><input type="radio" name="h1q6" onclick="checkAnswer('h1-q6', 'B', 'C')"> B) Kulaklık</label></li>
+                            <li><label><input type="radio" name="h1q6" onclick="checkAnswer('h1-q6', 'C', 'C')"> C) Mikrofon</label></li>
+                            <li><label><input type="radio" name="h1q6" onclick="checkAnswer('h1-q6', 'D', 'C')"> D) Ses Kartı Çıkışı</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Mikrofon dış ortamdaki sesleri elektrik sinyaline çeviren bir giriş birimidir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q7">
+                        <p>7. Ekrandaki görüntüyü bir duvara veya perdeye yansıtmaya yarayan ÇIKIŞ birimi hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q7" onclick="checkAnswer('h1-q7', 'A', 'A')"> A) Projeksiyon Cihazı</label></li>
+                            <li><label><input type="radio" name="h1q7" onclick="checkAnswer('h1-q7', 'B', 'A')"> B) Web Kamerası</label></li>
+                            <li><label><input type="radio" name="h1q7" onclick="checkAnswer('h1-q7', 'C', 'A')"> C) Optik Okuyucu</label></li>
+                            <li><label><input type="radio" name="h1q7" onclick="checkAnswer('h1-q7', 'D', 'A')"> D) Grafik Tablet</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Projeksiyon cihazları, görüntü sinyalini harici bir yüzeye yansıtan çıkış donanımlarıdır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q8">
+                        <p>8. Çizim ve grafik tasarımı yapan mimar/grafikerlerin kalemiyle ekrana girdi sağladığı cihaz hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q8" onclick="checkAnswer('h1-q8', 'A', 'D')"> A) Çizici (Plotter)</label></li>
+                            <li><label><input type="radio" name="h1q8" onclick="checkAnswer('h1-q8', 'B', 'D')"> B) Tarayıcı</label></li>
+                            <li><label><input type="radio" name="h1q8" onclick="checkAnswer('h1-q8', 'C', 'D')"> C) Fare (Mouse)</label></li>
+                            <li><label><input type="radio" name="h1q8" onclick="checkAnswer('h1-q8', 'D', 'D')"> D) Grafik Tablet (Digitizer)</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Grafik tablet, hassas çizim kalemleri vasıtasıyla bilgisayara çizim verisi aktaran bir giriş birimidir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q9">
+                        <p>9. Mağazalarda ürün kodlarını bilgisayara hızlıca aktarmak için kullanılan birim hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q9" onclick="checkAnswer('h1-q9', 'A', 'B')"> A) Yazıcı</label></li>
+                            <li><label><input type="radio" name="h1q9" onclick="checkAnswer('h1-q9', 'B', 'B')"> B) Barkod Okuyucu</label></li>
+                            <li><label><input type="radio" name="h1q9" onclick="checkAnswer('h1-q9', 'C', 'B')"> C) Monitör</label></li>
+                            <li><label><input type="radio" name="h1q9" onclick="checkAnswer('h1-q9', 'D', 'B')"> D) Hoparlör</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Barkod okuyucular optik sinyalleri veri koduna çeviren giriş donanımlarıdır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h1-q10">
+                        <p>10. Aşağıdaki seçeneklerin hangisinde SADECE çıkış birimleri bir arada verilmiştir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h1q10" onclick="checkAnswer('h1-q10', 'A', 'C')"> A) Monitör, Klavye, Hoparlör</label></li>
+                            <li><label><input type="radio" name="h1q10" onclick="checkAnswer('h1-q10', 'B', 'C')"> B) Fare, Tarayıcı, Yazıcı</label></li>
+                            <li><label><input type="radio" name="h1q10" onclick="checkAnswer('h1-q10', 'C', 'C')"> C) Monitör, Yazıcı, Hoparlör</label></li>
+                            <li><label><input type="radio" name="h1q10" onclick="checkAnswer('h1-q10', 'D', 'C')"> D) Mikrofon, Kulaklık, Projeksiyon</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Monitör, Yazıcı ve Hoparlör birimlerinin üçü de saf çıkış cihazlarıdır.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. HAFTA -->
+            <div id="hafta2" class="section-content">
+                <h2>2. Hafta: Anakart ve Merkezi İşlem Birimi (CPU) Mimarisi</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>Anakart, tüm iç ve dış donanımların veri yolları (Bus) üzerinden haberleştiği ana devredir.</p>
+                    <ul>
+                        <li><strong>Anakart Bileşenleri:</strong> Çipsetler (Northbridge/Southbridge veya modern entegre sistemler), veri yolları (PCIe, SATA), BIOS/UEFI yongası ve güç bağlantıları.</li>
+                        <li><strong>Merkezi İşlem Birimi (CPU):</strong> Bilgisayarın beynidir. 
+                            <ul>
+                                <li><strong>ALU (Aritmetik Mantık Birimi):</strong> Toplama, çıkarma, büyüktür/küçüktür gibi matematiksel ve mantıksal kararları verir.</li>
+                                <li><strong>CU (Kontrol Birimi):</strong> Komut kodlarını çözer (decode) ve birimler arası veri trafiğini yönetir.</li>
+                                <li><strong>Önbellek (Cache L1, L2, L3):</strong> CPU çekirdeğine entegre, RAM'e kıyasla mikro saniye seviyesinde çalışan süper hızlı SRAM yapılarıdır.</li>
+                            </ul>
+                        </li>
+                        <li><strong>İşlemci Saat Hızı:</strong> Hertz (Hz) ile ölçülür. 1 GHz = Saniyede 1 Milyar işlem döngüsü anlamına gelir.</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-container">
+                    <h3>📝 2. Hafta Konu Testi (10 Soru)</h3>
+
+                    <div class="quiz-question" id="h2-q1">
+                        <p>1. CPU içerisindeki toplama, çıkarma ve mantıksal karşılaştırmaları yapan birim hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q1" onclick="checkAnswer('h2-q1', 'A', 'B')"> A) Kontrol Birimi (CU)</label></li>
+                            <li><label><input type="radio" name="h2q1" onclick="checkAnswer('h2-q1', 'B', 'B')"> B) Aritmetik Mantık Birimi (ALU)</label></li>
+                            <li><label><input type="radio" name="h2q1" onclick="checkAnswer('h2-q1', 'C', 'B')"> C) Önbellek (Cache)</label></li>
+                            <li><label><input type="radio" name="h2q1" onclick="checkAnswer('h2-q1', 'D', 'B')"> D) BIOS</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: ALU (Arithmetic Logic Unit), mantıksal kıyaslamaları ve matematiksel hesaplamaları gerçekleştiren CPU bölümüdür.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q2">
+                        <p>2. CPU ile RAM arasındaki hız uyumsuzluğunu gidermek için işlemci içine entegre edilmiş en hızlı bellek katmanı hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q2" onclick="checkAnswer('h2-q2', 'A', 'C')"> A) ROM</label></li>
+                            <li><label><input type="radio" name="h2q2" onclick="checkAnswer('h2-q2', 'B', 'C')"> B) NVMe SSD</label></li>
+                            <li><label><input type="radio" name="h2q2" onclick="checkAnswer('h2-q2', 'C', 'C')"> C) Önbellek (Cache Memory)</label></li>
+                            <li><label><input type="radio" name="h2q2" onclick="checkAnswer('h2-q2', 'D', 'C')"> D) DRAM</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Cache (Önbellek), L1-L2-L3 seviyelerinde CPU çekirdeğine en yakın olan yüksek hızlı bellektir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q3">
+                        <p>3. 3.2 GHz saat hızındaki bir işlemci saniyede yaklaşık kaç işlem döngüsü gerçekleştirir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q3" onclick="checkAnswer('h2-q3', 'A', 'A')"> A) 3.2 Milyar</label></li>
+                            <li><label><input type="radio" name="h2q3" onclick="checkAnswer('h2-q3', 'B', 'A')"> B) 3.2 Milyon</label></li>
+                            <li><label><input type="radio" name="h2q3" onclick="checkAnswer('h2-q3', 'C', 'A')"> C) 320 Bin</label></li>
+                            <li><label><input type="radio" name="h2q3" onclick="checkAnswer('h2-q3', 'D', 'A')"> D) 32 Milyar</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: 1 GHz = 1 Milyar döngüdür. Dolayısıyla 3.2 GHz = Saniyede 3.2 Milyar döngüdür.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q4">
+                        <p>4. Tüm dahili ve harici bileşenlerin monte edildiği, iletişim kurduğu ana devre kartı hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q4" onclick="checkAnswer('h2-q4', 'A', 'C')"> A) Ekran Kartı</label></li>
+                            <li><label><input type="radio" name="h2q4" onclick="checkAnswer('h2-q4', 'B', 'C')"> B) Ses Kartı</label></li>
+                            <li><label><input type="radio" name="h2q4" onclick="checkAnswer('h2-q4', 'C', 'C')"> C) Anakart (Motherboard)</label></li>
+                            <li><label><input type="radio" name="h2q4" onclick="checkAnswer('h2-q4', 'D', 'C')"> D) Güç Kaynağı (PSU)</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Anakart, bileşenler arası veri yollarını barındıran temel platformdur.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q5">
+                        <p>5. Komutların sırasını düzenleyen ve diğer tüm birimlere sinyal göndererek veri trafiğini yöneten CPU birimi hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q5" onclick="checkAnswer('h2-q5', 'A', 'A')"> A) Kontrol Birimi (CU)</label></li>
+                            <li><label><input type="radio" name="h2q5" onclick="checkAnswer('h2-q5', 'B', 'A')"> B) ALU</label></li>
+                            <li><label><input type="radio" name="h2q5" onclick="checkAnswer('h2-q5', 'C', 'A')"> C) SSD</label></li>
+                            <li><label><input type="radio" name="h2q5" onclick="checkAnswer('h2-q5', 'D', 'A')"> D) BIOS</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Kontrol Birimi (Control Unit), yönlendirme ve zamanlama sinyallerini yönetir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q6">
+                        <p>6. İşlemci önbellek katmanlarından (L1, L2, L3) hangisi işlemci çekirdeğine EN YAKIN ve EN HIZLI olanıdır?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q6" onclick="checkAnswer('h2-q6', 'A', 'A')"> A) L1 Cache</label></li>
+                            <li><label><input type="radio" name="h2q6" onclick="checkAnswer('h2-q6', 'B', 'A')"> B) L2 Cache</label></li>
+                            <li><label><input type="radio" name="h2q6" onclick="checkAnswer('h2-q6', 'C', 'A')"> C) L3 Cache</label></li>
+                            <li><label><input type="radio" name="h2q6" onclick="checkAnswer('h2-q6', 'D', 'A')"> D) RAM</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: L1 en küçük kapasiteli ancak çekirdeğe en entegre ve en hızlı önbellek katmanıdır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q7">
+                        <p>7. Bilgisayar ilk açıldığında donanımları test eden (POST) ve işletim sistemini başlatan yazılım nerede saklanır?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q7" onclick="checkAnswer('h2-q7', 'A', 'B')"> A) RAM</label></li>
+                            <li><label><input type="radio" name="h2q7" onclick="checkAnswer('h2-q7', 'B', 'B')"> B) ROM (BIOS / UEFI)</label></li>
+                            <li><label><input type="radio" name="h2q7" onclick="checkAnswer('h2-q7', 'C', 'B')"> C) Harddisk</label></li>
+                            <li><label><input type="radio" name="h2q7" onclick="checkAnswer('h2-q7', 'D', 'B')"> D) Önbellek</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: BIOS/UEFI yazılımları silinmeyen ROM yongası içinde barındırılır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q8">
+                        <p>8. Ekran kartı, yüksek hızlı SSD gibi bileşenlerin anakarta bağlandığı yüksek hızlı genişleme yuvası hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q8" onclick="checkAnswer('h2-q8', 'A', 'C')"> A) USB</label></li>
+                            <li><label><input type="radio" name="h2q8" onclick="checkAnswer('h2-q8', 'B', 'C')"> B) PS/2</label></li>
+                            <li><label><input type="radio" name="h2q8" onclick="checkAnswer('h2-q8', 'C', 'C')"> C) PCI Express (PCIe)</label></li>
+                            <li><label><input type="radio" name="h2q8" onclick="checkAnswer('h2-q8', 'D', 'C')"> D) VGA</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: PCIe (Peripheral Component Interconnect Express), yüksek bant genişliği sunan modern seri genişleme arabirimidir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q9">
+                        <p>9. Birden fazla fiziksel işlemci çekirdeğinin tek bir yonga üzerinde birleştirilmesi teknolojisine ne ad verilir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q9" onclick="checkAnswer('h2-q9', 'A', 'B')"> A) Overclock</label></li>
+                            <li><label><input type="radio" name="h2q9" onclick="checkAnswer('h2-q9', 'B', 'B')"> B) Çok Çekirdek (Multi-Core)</label></li>
+                            <li><label><input type="radio" name="h2q9" onclick="checkAnswer('h2-q9', 'C', 'B')"> C) Single Threading</label></li>
+                            <li><label><input type="radio" name="h2q9" onclick="checkAnswer('h2-q9', 'D', 'B')"> D) Virtualization</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Multi-Core mimarisi, aynı işlemci paketinde birden çok bağımsız işlem biriminin (çekirdek) yer almasıdır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h2-q10">
+                        <p>10. Bir işlemcinin komut setini işleme yeteneğini ifade eden temel birim aşağıdakilerden hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h2q10" onclick="checkAnswer('h2-q10', 'A', 'A')"> A) Çekirdek / Thread</label></li>
+                            <li><label><input type="radio" name="h2q10" onclick="checkAnswer('h2-q10', 'B', 'A')"> B) Sektör</label></li>
+                            <li><label><input type="radio" name="h2q10" onclick="checkAnswer('h2-q10', 'C', 'A')"> C) Cluster</label></li>
+                            <li><label><input type="radio" name="h2q10" onclick="checkAnswer('h2-q10', 'D', 'A')"> D) Pixel</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: İşlemcide komut dizilerini eşzamanlı yürüten mantıksal veya fiziksel kanallara Thread (İş parçacığı) / Çekirdek denir.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. HAFTA -->
+            <div id="hafta3" class="section-content">
+                <h2>3. Hafta: Bellek Türleri (RAM/ROM) ve Veri Ölçü Birimleri</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>Bellekler verilerin geçici veya kalıcı saklandığı ortamlardır.</p>
+                    <ul>
+                        <li><strong>RAM (Random Access Memory):</strong> 
+                            <ul>
+                                <li>Aktif çalışan uygulama verileri tutulur.</li>
+                                <li><strong>Uçucudur (Volatile):</strong> Elektrik kesildiğinde veriler tamamen silinir.</li>
+                                <li>DRAM (Dinamik) ve SRAM (Statik) türleri bulunur.</li>
+                            </ul>
+                        </li>
+                        <li><strong>ROM (Read Only Memory):</strong> 
+                            <ul>
+                                <li>Fabrikasyon veya özel cihazlarla yazılan kalıcı belleklerdir.</li>
+                                <li><strong>Uçucu Değildir (Non-Volatile):</strong> Güç kesilse de veri muhafaza edilir.</li>
+                                <li>PROM, EPROM ve EEPROM türleri gelişmiştir.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Veri Ölçü Birimleri Hiyerarşisi (1024 Tabanlı):</strong>
+                            <p>1 Bit (0/1) &rarr; 8 Bit = 1 Byte &rarr; 1024 B = 1 KB &rarr; 1024 KB = 1 MB &rarr; 1024 MB = 1 GB &rarr; 1024 GB = 1 TB &rarr; 1024 TB = 1 PB</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="quiz-container">
+                    <h3>📝 3. Hafta Konu Testi (10 Soru)</h3>
+
+                    <div class="quiz-question" id="h3-q1">
+                        <p>1. Elektrik kesildiğinde tüm verileri silinen geçici bellek türü hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q1" onclick="checkAnswer('h3-q1', 'A', 'A')"> A) RAM</label></li>
+                            <li><label><input type="radio" name="h3q1" onclick="checkAnswer('h3-q1', 'B', 'A')"> B) ROM</label></li>
+                            <li><label><input type="radio" name="h3q1" onclick="checkAnswer('h3-q1', 'C', 'A')"> C) Flash Bellek</label></li>
+                            <li><label><input type="radio" name="h3q1" onclick="checkAnswer('h3-q1', 'D', 'A')"> D) SSD</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: RAM uçucu (Volatile) bir bellektir; enerjisi kesildiğinde veriyi tutamaz.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q2">
+                        <p>2. 1 Byte toplamda kaç Bit'ten oluşur?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q2" onclick="checkAnswer('h3-q2', 'A', 'C')"> A) 2</label></li>
+                            <li><label><input type="radio" name="h3q2" onclick="checkAnswer('h3-q2', 'B', 'C')"> B) 4</label></li>
+                            <li><label><input type="radio" name="h3q2" onclick="checkAnswer('h3-q2', 'C', 'C')"> C) 8</label></li>
+                            <li><label><input type="radio" name="h3q2" onclick="checkAnswer('h3-q2', 'D', 'C')"> D) 16</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Standart veri mimarisinde 8 Bit birleşerek 1 Byte'ı meydana getirir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q3">
+                        <p>3. 4 Gigabyte (GB) kaç Megabyte (MB) eder?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q3" onclick="checkAnswer('h3-q3', 'A', 'B')"> A) 4000</label></li>
+                            <li><label><input type="radio" name="h3q3" onclick="checkAnswer('h3-q3', 'B', 'B')"> B) 4096</label></li>
+                            <li><label><input type="radio" name="h3q3" onclick="checkAnswer('h3-q3', 'C', 'B')"> C) 2048</label></li>
+                            <li><label><input type="radio" name="h3q3" onclick="checkAnswer('h3-q3', 'D', 'B')"> D) 1024</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: 1 GB = 1024 MB olduğundan, 4 GB = 4 * 1024 = 4096 MB'dır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q4">
+                        <p>4. Mor ötesi (UV) ışık kullanılarak içeriği silinebilen ve yeniden yazılabilen ROM türü hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q4" onclick="checkAnswer('h3-q4', 'A', 'B')"> A) PROM</label></li>
+                            <li><label><input type="radio" name="h3q4" onclick="checkAnswer('h3-q4', 'B', 'B')"> B) EPROM</label></li>
+                            <li><label><input type="radio" name="h3q4" onclick="checkAnswer('h3-q4', 'C', 'B')"> C) EEPROM</label></li>
+                            <li><label><input type="radio" name="h3q4" onclick="checkAnswer('h3-q4', 'D', 'B')"> D) DRAM</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Erasable Programmable ROM (EPROM), üzerindeki pencereden UV ışık verilerek silinebilen ROM çeşididir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q5">
+                        <p>5. Elektriksel olarak silinebilen ve günümüz BIOS/Flash bellek teknolojisine temel oluşturan ROM türü hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q5" onclick="checkAnswer('h3-q5', 'A', 'C')"> A) PROM</label></li>
+                            <li><label><input type="radio" name="h3q5" onclick="checkAnswer('h3-q5', 'B', 'C')"> B) EPROM</label></li>
+                            <li><label><input type="radio" name="h3q5" onclick="checkAnswer('h3-q5', 'C', 'C')"> C) EEPROM</label></li>
+                            <li><label><input type="radio" name="h3q5" onclick="checkAnswer('h3-q5', 'D', 'C')"> D) SRAM</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Electrically Erasable Programmable ROM (EEPROM), voltaj ile silinip güncellenebilir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q6">
+                        <p>6. Bilgisayardaki en küçük veri birimi (0 veya 1) aşağıdakilerden hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q6" onclick="checkAnswer('h3-q6', 'A', 'A')"> A) Bit</label></li>
+                            <li><label><input type="radio" name="h3q6" onclick="checkAnswer('h3-q6', 'B', 'A')"> B) Byte</label></li>
+                            <li><label><input type="radio" name="h3q6" onclick="checkAnswer('h3-q6', 'C', 'A')"> C) Kilobyte</label></li>
+                            <li><label><input type="radio" name="h3q6" onclick="checkAnswer('h3-q6', 'D', 'A')"> D) Nibble</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Ikili mantık sistemindeki 0 veya 1 değerine Bit (Binary Digit) adı verilir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q7">
+                        <p>7. 1 Terabyte (TB) kaç Gigabyte (GB) büyüklüğe karşılık gelir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q7" onclick="checkAnswer('h3-q7', 'A', 'C')"> A) 1000</label></li>
+                            <li><label><input type="radio" name="h3q7" onclick="checkAnswer('h3-q7', 'B', 'C')"> B) 100</label></li>
+                            <li><label><input type="radio" name="h3q7" onclick="checkAnswer('h3-q7', 'C', 'C')"> C) 1024</label></li>
+                            <li><label><input type="radio" name="h3q7" onclick="checkAnswer('h3-q7', 'D', 'C')"> D) 2048</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Dijital depolama katlarında her bir üst birim bir alt birimin 1024 (2^10) katıdır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q8">
+                        <p>8. Sürekli tazelenme (Refresh) gerektirmeyen ve işlemci önbelleğinde kullanılan hızlı RAM çeşidi hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q8" onclick="checkAnswer('h3-q8', 'A', 'B')"> A) DRAM</label></li>
+                            <li><label><input type="radio" name="h3q8" onclick="checkAnswer('h3-q8', 'B', 'B')"> B) SRAM (Statik RAM)</label></li>
+                            <li><label><input type="radio" name="h3q8" onclick="checkAnswer('h3-q8', 'C', 'B')"> C) SDRAM</label></li>
+                            <li><label><input type="radio" name="h3q8" onclick="checkAnswer('h3-q8', 'D', 'B')"> D) DDR4</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: SRAM (Static RAM) kapasitör şarjına ihtiyaç duymadığı için çok hızlıdır fakat maliyetlidir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q9">
+                        <p>9. 4 Bitlik veri grubuna verilen özel isim aşağıdakilerden hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q9" onclick="checkAnswer('h3-q9', 'A', 'D')"> A) Word</label></li>
+                            <li><label><input type="radio" name="h3q9" onclick="checkAnswer('h3-q9', 'B', 'D')"> B) Byte</label></li>
+                            <li><label><input type="radio" name="h3q9" onclick="checkAnswer('h3-q9', 'C', 'D')"> C) Block</label></li>
+                            <li><label><input type="radio" name="h3q9" onclick="checkAnswer('h3-q9', 'D', 'D')"> D) Nibble (Yarım Byte)</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Yarım Byte (4 Bit) büyüklüğündeki veri bloklarına Nibble denir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h3-q10">
+                        <p>10. Bilgisayara elektrik verildiğinde bellek elemanlarından hangisindeki veriler KORUNUR (silinmez)?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h3q10" onclick="checkAnswer('h3-q10', 'A', 'B')"> A) DRAM</label></li>
+                            <li><label><input type="radio" name="h3q10" onclick="checkAnswer('h3-q10', 'B', 'B')"> B) ROM</label></li>
+                            <li><label><input type="radio" name="h3q10" onclick="checkAnswer('h3-q10', 'C', 'B')"> C) SRAM</label></li>
+                            <li><label><input type="radio" name="h3q10" onclick="checkAnswer('h3-q10', 'D', 'B')"> D) L2 Cache</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: ROM (Read Only Memory) uçucu olmayan (Non-volatile) kalıcı bellektir.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. HAFTA -->
+            <div id="hafta4" class="section-content">
+                <h2>4. Hafta: Depolama Birimleri (HDD vs SSD Mimarisi)</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>Depolama birimleri, verilerin kalıcı olarak saklandığı ikincil hafıza elemanlarıdır.</p>
+                    <table>
+                        <tr>
+                            <th>Özellik</th>
+                            <th>HDD (Hard Disk Drive)</th>
+                            <th>SSD (Solid State Drive)</th>
+                        </tr>
+                        <tr>
+                            <td><strong>İç Yapı</strong></td>
+                            <td>Dönen manyetik plakalar, okuma/yazma kafası, motor</td>
+                            <td>NAND Flash bellek çipleri, denetleyici (Controller)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hız</strong></td>
+                            <td>Düşük (100-200 MB/s civarı)</td>
+                            <td>Çok Yüksek (SATA: 550MB/s, NVMe: 3500-7000MB/s)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mekanik Dayanıklılık</strong></td>
+                            <td>Sarsıntı ve düşmelere karşı hassas (Bozulabilir)</td>
+                            <td>Hareketli parça olmadığı için darbelere dayanıklı</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hız Ölçütü</strong></td>
+                            <td>RPM (Revolutions Per Minute - Dakikadaki devir)</td>
+                            <td>IOPS ve MB/sn okuma-yazma değerleri</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="quiz-container">
+                    <h3>📝 4. Hafta Konu Testi (10 Soru)</h3>
+
+                    <div class="quiz-question" id="h4-q1">
+                        <p>1. SSD sürücülerin HDD'ye kıyasla darbelere karşı çok daha dayanıklı olmasının ana nedeni nedir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q1" onclick="checkAnswer('h4-q1', 'A', 'C')"> A) Metal kasaya sahip olması</label></li>
+                            <li><label><input type="radio" name="h4q1" onclick="checkAnswer('h4-q1', 'B', 'C')"> B) Daha büyük boyutlu olması</label></li>
+                            <li><label><input type="radio" name="h4q1" onclick="checkAnswer('h4-q1', 'C', 'C')"> C) Hareketli mekanik parçasının bulunmaması</label></li>
+                            <li><label><input type="radio" name="h4q1" onclick="checkAnswer('h4-q1', 'D', 'C')"> D) Fan ile soğutulması</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: SSD'ler sadece elektronik çipten oluştukları için dönen plaka ve mekanik kafa barındırmazlar.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q2">
+                        <p>2. HDD'lerde dönen plakaların dakikadaki dönüş sayısını ifade eden kısaltma hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q2" onclick="checkAnswer('h4-q2', 'A', 'A')"> A) RPM</label></li>
+                            <li><label><input type="radio" name="h4q2" onclick="checkAnswer('h4-q2', 'B', 'A')"> B) GHz</label></li>
+                            <li><label><input type="radio" name="h4q2" onclick="checkAnswer('h4-q2', 'C', 'A')"> C) DPI</label></li>
+                            <li><label><input type="radio" name="h4q2" onclick="checkAnswer('h4-q2', 'D', 'A')"> D) FPS</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: RPM (Revolutions Per Minute), manyetik diskin dakikadaki devir sayısıdır (Örn: 7200 RPM).</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q3">
+                        <p>3. PCIe veri hatlarını kullanarak 7000 MB/s gibi ultra yüksek okuma hızlarına ulaşan SSD protokolü hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q3" onclick="checkAnswer('h4-q3', 'A', 'B')"> A) SATA 3</label></li>
+                            <li><label><input type="radio" name="h4q3" onclick="checkAnswer('h4-q3', 'B', 'B')"> B) NVMe (Non-Volatile Memory Express)</label></li>
+                            <li><label><input type="radio" name="h4q3" onclick="checkAnswer('h4-q3', 'C', 'B')"> C) IDE</label></li>
+                            <li><label><input type="radio" name="h4q3" onclick="checkAnswer('h4-q3', 'D', 'B')"> D) Floppy</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: NVMe protokolü, PCIe bus hatları üzerinden doğrudan CPU ile yüksek hızda haberleşir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q4">
+                        <p>4. SSD'lerde verilerin depolandığı temel yarı iletken hücre teknolojisine ne ad verilir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q4" onclick="checkAnswer('h4-q4', 'A', 'A')"> A) NAND Flash</label></li>
+                            <li><label><input type="radio" name="h4q4" onclick="checkAnswer('h4-q4', 'B', 'A')"> B) Magnetic Platter</label></li>
+                            <li><label><input type="radio" name="h4q4" onclick="checkAnswer('h4-q4', 'C', 'A')"> C) Optik Disk</label></li>
+                            <li><label><input type="radio" name="h4q4" onclick="checkAnswer('h4-q4', 'D', 'A')"> D) DRAM Cell</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: SSD sürücüler elektriksel silinebilir NAND Flash çipleri üzerine veri yazar.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q5">
+                        <p>5. Hard disklerde manyetik plakalar üzerindeki en küçük iz dairesine verilen ad hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q5" onclick="checkAnswer('h4-q5', 'A', 'D')"> A) Pin</label></li>
+                            <li><label><input type="radio" name="h4q5" onclick="checkAnswer('h4-q5', 'B', 'D')"> B) Port</label></li>
+                            <li><label><input type="radio" name="h4q5" onclick="checkAnswer('h4-q5', 'C', 'D')"> C) Transistör</label></li>
+                            <li><label><input type="radio" name="h4q5" onclick="checkAnswer('h4-q5', 'D', 'D')"> D) İz (Track) / Sektör (Sector)</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: HDD diski dairesel halkalara (Track) ve bunların dilimlerine (Sector) ayrılmıştır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q6">
+                        <p>6. Geleneksel SATA 3 arayüzünün teorik veri transfer üst sınırı yaklaşık ne kadardır?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q6" onclick="checkAnswer('h4-q6', 'A', 'B')"> A) 100 MB/s</label></li>
+                            <li><label><input type="radio" name="h4q6" onclick="checkAnswer('h4-q6', 'B', 'B')"> B) 600 MB/s (6 Gbps)</label></li>
+                            <li><label><input type="radio" name="h4q6" onclick="checkAnswer('h4-q6', 'C', 'B')"> C) 3500 MB/s</label></li>
+                            <li><label><input type="radio" name="h4q6" onclick="checkAnswer('h4-q6', 'D', 'B')"> D) 10 GB/s</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: SATA 3 standardı maksimum 6 Gbps (yaklaşık 550-600 MB/sn gerçek aktarım) sınırına sahiptir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q7">
+                        <p>7. Lazer ışığı kullanarak veri okuma ve yazma gerçekleştiren depolama ortamı hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q7" onclick="checkAnswer('h4-q7', 'A', 'C')"> A) HDD</label></li>
+                            <li><label><input type="radio" name="h4q7" onclick="checkAnswer('h4-q7', 'B', 'C')"> B) SSD</label></li>
+                            <li><label><input type="radio" name="h4q7" onclick="checkAnswer('h4-q7', 'C', 'C')"> C) Optik Sürücü (CD/DVD/Blu-ray)</label></li>
+                            <li><label><input type="radio" name="h4q7" onclick="checkAnswer('h4-q7', 'D', 'C')"> D) Disket</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Optik diskler çukur ve düzlükleri okumak için kırmızı/mavi lazer ışınlarını kullanır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q8">
+                        <p>8. Bir depolama biriminin saniyedeki Girdisi/Çıktısı işlem sayısını gösteren performans ölçütü hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q8" onclick="checkAnswer('h4-q8', 'A', 'A')"> A) IOPS</label></li>
+                            <li><label><input type="radio" name="h4q8" onclick="checkAnswer('h4-q8', 'B', 'A')"> B) RPM</label></li>
+                            <li><label><input type="radio" name="h4q8" onclick="checkAnswer('h4-q8', 'C', 'A')"> C) Hz</label></li>
+                            <li><label><input type="radio" name="h4q8" onclick="checkAnswer('h4-q8', 'D', 'A')"> D) Ping</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: IOPS (Input/Output Operations Per Second), özellikle SSD'lerin rastgele okuma/yazma hız performansını gösterir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q9">
+                        <p>9. Birden fazla hard diski birleştirerek veri güvenliği (Yedeklilik) veya hız artıran disk dizilimi mimarisi hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q9" onclick="checkAnswer('h4-q9', 'A', 'B')"> A) BIOS</label></li>
+                            <li><label><input type="radio" name="h4q9" onclick="checkAnswer('h4-q9', 'B', 'B')"> B) RAID</label></li>
+                            <li><label><input type="radio" name="h4q9" onclick="checkAnswer('h4-q9', 'C', 'B')"> C) CMOS</label></li>
+                            <li><label><input type="radio" name="h4q9" onclick="checkAnswer('h4-q9', 'D', 'B')"> D) POST</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: RAID (Redundant Array of Independent Disks), çoklu diskleri performans veya hata toleransı için bağlar.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h4-q10">
+                        <p>10. Güç kesildiğinde SSD içerisindeki verilerin kaybolmamasını sağlayan temel özellik nedir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h4q10" onclick="checkAnswer('h4-q10', 'A', 'C')"> A) DRAM gibi çalışması</label></li>
+                            <li><label><input type="radio" name="h4q10" onclick="checkAnswer('h4-q10', 'B', 'C')"> B) Pil ile beslenmesi</label></li>
+                            <li><label><input type="radio" name="h4q10" onclick="checkAnswer('h4-q10', 'C', 'C')"> C) Non-volatile Flash mimarisine sahip olması</label></li>
+                            <li><label><input type="radio" name="h4q10" onclick="checkAnswer('h4-q10', 'D', 'C')"> D) Bakır hatlar barındırması</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Flash bellek hücreleri elektrik olmadan da elektron yükünü hapsederek veriyi saklar.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. HAFTA -->
+            <div id="hafta5" class="section-content">
+                <h2>5. Hafta: Ağ Donanımları ve İletişim Mimarisi</h2>
+                <div class="info-card">
+                    <h3>Geniş Kapsamlı Konu Özeti</h3>
+                    <p>Ağ cihazları veriyi ileten, anahtarlayan ve farklı ağlar arasında yönlendiren bileşenlerdir.</p>
+                    <table>
+                        <tr>
+                            <th>Cihaz</th>
+                            <th>OSI Katmanı</th>
+                            <th>Adresleme Türü</th>
+                            <th>Çalışma Prensibi</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Hub</strong></td>
+                            <td>Katman 1 (Fiziksel)</td>
+                            <td>Adres Bakmaz</td>
+                            <td>Gelen veriyi kopyalayıp tüm portlara yayınlar (Broadcast). Ağda çakışmalara (Collision) yol açar.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Switch (Anahtar)</strong></td>
+                            <td>Katman 2 (Veri Bağlantı)</td>
+                            <td>MAC Adresi</td>
+                            <td>MAC adres tablosu tutar. Veriyi sadece hedef cihaza yönlendirir. Güvenlidir.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Router (Yönlendirici)</strong></td>
+                            <td>Katman 3 (Ağ)</td>
+                            <td>IP Adresi</td>
+                            <td>Farklı alt ağları (Subnet) ve LAN'ları WAN'a bağlar. Ağlar arası rotalama (Routing) yapar.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NIC (Ağ Kartı)</strong></td>
+                            <td>Katman 1-2</td>
+                            <td>MAC Adresi</td>
+                            <td>Cihazın ağa kablolu (Ethernet) veya kablosuz (Wi-Fi) bağlanmasını sağlayan donanımdır.</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="quiz-container">
+                    <h3>📝 5. Hafta Konu Testi (10 Soru)</h3>
+
+                    <div class="quiz-question" id="h5-q1">
+                        <p>1. Gelen veri paketini hiçbir adres ayrımı yapmadan bağlı tüm portlara yayınlayan (Broadcast) Katman 1 cihazı hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q1" onclick="checkAnswer('h5-q1', 'A', 'B')"> A) Switch</label></li>
+                            <li><label><input type="radio" name="h5q1" onclick="checkAnswer('h5-q1', 'B', 'B')"> B) Hub</label></li>
+                            <li><label><input type="radio" name="h5q1" onclick="checkAnswer('h5-q1', 'C', 'B')"> C) Router</label></li>
+                            <li><label><input type="radio" name="h5q1" onclick="checkAnswer('h5-q1', 'D', 'B')"> D) Firewall</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Hub akılsız bir cihazdır; veriyi süzmeden tüm portlara iletir (Ağda bant genişliğini israf eder).</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q2">
+                        <p>2. İçerisindeki MAC adres tablosunu kullanarak paketleri yalnızca ilgili hedef porta ileten OSI 2. Katman cihazı hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q2" onclick="checkAnswer('h5-q2', 'A', 'C')"> A) Repeater</label></li>
+                            <li><label><input type="radio" name="h5q2" onclick="checkAnswer('h5-q2', 'B', 'C')"> B) Hub</label></li>
+                            <li><label><input type="radio" name="h5q2" onclick="checkAnswer('h5-q2', 'C', 'C')"> C) Switch (Anahtar)</label></li>
+                            <li><label><input type="radio" name="h5q2" onclick="checkAnswer('h5-q2', 'D', 'C')"> D) Modem</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Switch (Anahtar), cihazların MAC adresini öğrenerek veriyi nokta atışı hedefe gönderir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q3">
+                        <p>3. OSI Katman 3'te (Ağ Katmanı) çalışan ve farklı IP ağları arasında paket yönlendirmesi yapan cihaz hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q3" onclick="checkAnswer('h5-q3', 'A', 'A')"> A) Router (Yönlendirici)</label></li>
+                            <li><label><input type="radio" name="h5q3" onclick="checkAnswer('h5-q3', 'B', 'A')"> B) Switch</label></li>
+                            <li><label><input type="radio" name="h5q3" onclick="checkAnswer('h5-q3', 'C', 'A')"> C) Hub</label></li>
+                            <li><label><input type="radio" name="h5q3" onclick="checkAnswer('h5-q3', 'D', 'A')"> D) Access Point</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Router, IP adreslerini inceleyerek veriyi farklı ağlar (Örn: Ev ağı ile İnternet) arasında yönlendirir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q4">
+                        <p>4. Bir ağ kartına üretim aşamasında kazınan 48 bitlik benzersiz fiziksel adrese ne denir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q4" onclick="checkAnswer('h5-q4', 'A', 'B')"> A) IP Adresi</label></li>
+                            <li><label><input type="radio" name="h5q4" onclick="checkAnswer('h5-q4', 'B', 'B')"> B) MAC Adresi</label></li>
+                            <li><label><input type="radio" name="h5q4" onclick="checkAnswer('h5-q4', 'C', 'B')"> C) Port Numarası</label></li>
+                            <li><label><input type="radio" name="h5q4" onclick="checkAnswer('h5-q4', 'D', 'B')"> D) Subnet Mask</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: MAC (Media Access Control) adresi donanımsal ve benzersiz bir fiziksel adrestir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q5">
+                        <p>5. Zayıflayan sinyali alıp güçlendirerek daha uzak mesafelere ileten ağ cihazı hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q5" onclick="checkAnswer('h5-q5', 'A', 'C')"> A) Router</label></li>
+                            <li><label><input type="radio" name="h5q5" onclick="checkAnswer('h5-q5', 'B', 'C')"> B) Switch</label></li>
+                            <li><label><input type="radio" name="h5q5" onclick="checkAnswer('h5-q5', 'C', 'C')"> C) Repeater (Tekrarlayıcı)</label></li>
+                            <li><label><input type="radio" name="h5q5" onclick="checkAnswer('h5-q5', 'D', 'C')"> D) Firewall</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Repeater sinyali yenileyip yükselterek menzil genişletmeye yarar.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q6">
+                        <p>6. Analog sinyalleri dijitale, dijital sinyalleri analoga çevirerek internet bağlantısını sağlayan cihaz hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q6" onclick="checkAnswer('h5-q6', 'A', 'D')"> A) Hub</label></li>
+                            <li><label><input type="radio" name="h5q6" onclick="checkAnswer('h5-q6', 'B', 'D')"> B) Switch</label></li>
+                            <li><label><input type="radio" name="h5q6" onclick="checkAnswer('h5-q6', 'C', 'D')"> C) Access Point</label></li>
+                            <li><label><input type="radio" name="h5q6" onclick="checkAnswer('h5-q6', 'D', 'D')"> D) Modem</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Modem kelimesi Modülatör / Demodülatör terimlerinin birleşiminden gelir.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q7">
+                        <p>7. Tüm cihazların merkezi bir Switch veya Hub cihazına bağlı olduğu fiziksel ağ topolojisi hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q7" onclick="checkAnswer('h5-q7', 'A', 'A')"> A) Yıldız (Star) Topolojisi</label></li>
+                            <li><label><input type="radio" name="h5q7" onclick="checkAnswer('h5-q7', 'B', 'A')"> B) Ortak Yol (Bus) Topolojisi</label></li>
+                            <li><label><input type="radio" name="h5q7" onclick="checkAnswer('h5-q7', 'C', 'A')"> C) Halka (Ring) Topolojisi</label></li>
+                            <li><label><input type="radio" name="h5q7" onclick="checkAnswer('h5-q7', 'D', 'A')"> D) Ağaç (Tree) Topolojisi</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Yıldız topolojisinde tüm düğümler ortak bir merkezi cihaza (Switch/Hub) doğrudan bağlanır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q8">
+                        <p>8. İnternet paketlerini güvenlik kurallarına göre denetleyen, yetkisiz erişimleri engelleyen sistem hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q8" onclick="checkAnswer('h5-q8', 'A', 'B')"> A) Access Point</label></li>
+                            <li><label><input type="radio" name="h5q8" onclick="checkAnswer('h5-q8', 'B', 'B')"> B) Firewall (Güvenlik Duvarı)</label></li>
+                            <li><label><input type="radio" name="h5q8" onclick="checkAnswer('h5-q8', 'C', 'B')"> C) Repeater</label></li>
+                            <li><label><input type="radio" name="h5q8" onclick="checkAnswer('h5-q8', 'D', 'B')"> D) Hub</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Firewall gelen ve giden ağ trafiğini tanımlanmış kurallara göre filtreler.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q9">
+                        <p>9. Kablosuz (Wi-Fi) cihazların kablolu bir ağa dahil olmasını sağlayan erişim noktası cihazı hangisidir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q9" onclick="checkAnswer('h5-q9', 'A', 'C')"> A) NIC</label></li>
+                            <li><label><input type="radio" name="h5q9" onclick="checkAnswer('h5-q9', 'B', 'C')"> B) Coaxial Cable</label></li>
+                            <li><label><input type="radio" name="h5q9" onclick="checkAnswer('h5-q9', 'C', 'C')"> C) Access Point (AP)</label></li>
+                            <li><label><input type="radio" name="h5q9" onclick="checkAnswer('h5-q9', 'D', 'C')"> D) Hub</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: Access Point kablosuz Wi-Fi sinyallerini alır ve kablolu ağ yapısına aktarır.</div>
+                    </div>
+
+                    <div class="quiz-question" id="h5-q10">
+                        <p>10. Bir binada veya odada kurulu olan yerel alan ağına ne ad verilir?</p>
+                        <ul class="options-list">
+                            <li><label><input type="radio" name="h5q10" onclick="checkAnswer('h5-q10', 'A', 'A')"> A) LAN (Local Area Network)</label></li>
+                            <li><label><input type="radio" name="h5q10" onclick="checkAnswer('h5-q10', 'B', 'A')"> B) WAN (Wide Area Network)</label></li>
+                            <li><label><input type="radio" name="h5q10" onclick="checkAnswer('h5-q10', 'C', 'A')"> C) MAN (Metropolitan Area Network)</label></li>
+                            <li><label><input type="radio" name="h5q10" onclick="checkAnswer('h5-q10', 'D', 'A')"> D) PAN</label></li>
+                        </ul>
+                        <div class="explanation">Açıklama: LAN, ev veya ofis gibi kısıtlı coğrafi alandaki cihazların oluşturduğu yerel ağdır.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. BAŞLIK: GENEL SORU BANKASI DOSYASI -->
+            <div id="sorubankasi" class="section-content">
+                <h2>📚 6. Ayrı Başlık: Genel Soru Bankası Dosyası</h2>
+                <p>Bu bölüm, ders genelindeki soruları tek bir çatı altında toplayan özel sınav soru bankası modülüdür.</p>
+
+                <h3>Bölüm A: Genel Çoktan Seçmeli Test Soruları</h3>
+                
+                <div class="quiz-question" id="sb-q1">
+                    <p>1. Elektrik kesildiğinde üzerindeki verileri kaybeden bellek türü aşağıdakilerden hangisidir?</p>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="sbq1" onclick="checkAnswer('sb-q1', 'A', 'C')"> A) ROM</label></li>
+                        <li><label><input type="radio" name="sbq1" onclick="checkAnswer('sb-q1', 'B', 'C')"> B) NVMe SSD</label></li>
+                        <li><label><input type="radio" name="sbq1" onclick="checkAnswer('sb-q1', 'C', 'C')"> C) RAM</label></li>
+                        <li><label><input type="radio" name="sbq1" onclick="checkAnswer('sb-q1', 'D', 'C')"> D) Flash Bellek</label></li>
+                    </ul>
+                    <div class="explanation">Açıklama: RAM geçici (Volatile) bir bellektir. Güç kesilince veriler silinir.</div>
+                </div>
+
+                <div class="quiz-question" id="sb-q2">
+                    <p>2. Ağ donanımlarından hangisi gelen paketleri MAC adresi tablosuna göre yalnızca ilgili hedef porta iletir?</p>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="sbq2" onclick="checkAnswer('sb-q2', 'A', 'B')"> A) Hub</label></li>
+                        <li><label><input type="radio" name="sbq2" onclick="checkAnswer('sb-q2', 'B', 'B')"> B) Switch</label></li>
+                        <li><label><input type="radio" name="sbq2" onclick="checkAnswer('sb-q2', 'C', 'B')"> C) Repeater</label></li>
+                        <li><label><input type="radio" name="sbq2" onclick="checkAnswer('sb-q2', 'D', 'B')"> D) Modem</label></li>
+                    </ul>
+                    <div class="explanation">Açıklama: Switch cihazı Katman 2 düzeyinde MAC adres tablosu ile çalışır.</div>
+                </div>
+
+                <div class="quiz-question" id="sb-q3">
+                    <p>3. 2 GB (Gigabyte) kaç MB (Megabyte) değerine eşittir?</p>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="sbq3" onclick="checkAnswer('sb-q3', 'A', 'C')"> A) 1024</label></li>
+                        <li><label><input type="radio" name="sbq3" onclick="checkAnswer('sb-q3', 'B', 'C')"> B) 2000</label></li>
+                        <li><label><input type="radio" name="sbq3" onclick="checkAnswer('sb-q3', 'C', 'C')"> C) 2048</label></li>
+                        <li><label><input type="radio" name="sbq3" onclick="checkAnswer('sb-q3', 'D', 'C')"> D) 4096</label></li>
+                    </ul>
+                    <div class="explanation">Açıklama: 2 x 1024 = 2048 MB eder.</div>
+                </div>
+
+                <div class="quiz-question" id="sb-q4">
+                    <p>4. İşlemci ile RAM arasındaki hız farkını kapatmak için kullanılan ultra hızlı entegre bellek katmanına ne ad verilir?</p>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="sbq4" onclick="checkAnswer('sb-q4', 'A', 'A')"> A) Önbellek (Cache Memory)</label></li>
+                        <li><label><input type="radio" name="sbq4" onclick="checkAnswer('sb-q4', 'B', 'A')"> B) Sanal Bellek (Virtual Memory)</label></li>
+                        <li><label><input type="radio" name="sbq4" onclick="checkAnswer('sb-q4', 'C', 'A')"> C) ROM Bellek</label></li>
+                        <li><label><input type="radio" name="sbq4" onclick="checkAnswer('sb-q4', 'D', 'A')"> D) Harici Disk</label></li>
+                    </ul>
+                    <div class="explanation">Açıklama: Önbellek (L1, L2, L3) CPU içerisinde çalışan en hızlı SRAM belleklerdir.</div>
+                </div>
+
+                <div class="quiz-question" id="sb-q5">
+                    <p>5. OSI modelinin 3. Katmanında (Ağ Katmanı) çalışan ve farklı IP ağlarını birbirine bağlayan cihaz hangisidir?</p>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="sbq5" onclick="checkAnswer('sb-q5', 'A', 'C')"> A) Switch</label></li>
+                        <li><label><input type="radio" name="sbq5" onclick="checkAnswer('sb-q5', 'B', 'C')"> B) Hub</label></li>
+                        <li><label><input type="radio" name="sbq5" onclick="checkAnswer('sb-q5', 'C', 'C')"> C) Yönlendirici (Router)</label></li>
+                        <li><label><input type="radio" name="sbq5" onclick="checkAnswer('sb-q5', 'D', 'C')"> D) Ağ Kablosu</label></li>
+                    </ul>
+                    <div class="explanation">Açıklama: Router Katman 3 seviyesinde IP paket yönlendirmesi yapar.</div>
+                </div>
+
+                <h3>Bölüm B: Doğru / Yanlış Çalışma Soruları</h3>
+                <div class="info-card">
+                    <ol style="line-height: 1.8;">
+                        <li><strong>[ YANLIŞ ]</strong> SSD sürücüler mekanik dairesel plakalar barındırdığı için darbelerden çabuk etkilenir. <em>(Açıklama: Plaka mekaniği HDD'de vardır, SSD sadece çiplerden oluşur).</em></li>
+                        <li><strong>[ DOĞRU ]</strong> BIOS/UEFI yazılımı kalıcı bir bellek olan ROM üzerinde saklanır.</li>
+                        <li><strong>[ DOĞRU ]</strong> Hub cihazı, ağdaki tüm cihazlara veriyi kopyalayarak ileten akılsız bir ağ donanımıdır.</li>
+                        <li><strong>[ YANLIŞ ]</strong> 1 Byte toplamda 16 Bit'ten oluşmaktadır. <em>(Açıklama: 1 Byte = 8 Bit'tir).</em></li>
+                    </ol>
+                </div>
+
+                <h3>Bölüm C: Klasik Sınav Soruları ve Cevapları</h3>
+                <div class="info-card">
+                    <p><strong>S1. HDD ve SSD arasındaki 3 temel farkı yazınız.</strong></p>
+                    <p><strong>Cevap:</strong> 
+                        <br>1) <em>Yapı:</em> HDD mekanik plakalıdır, SSD elektronik flash çiplidir. 
+                        <br>2) <em>Hız:</em> SSD okuma/yazmada çok daha hızlıdır. 
+                        <br>3) <em>Dayanıklılık:</em> SSD hareketli parça barındırmadığı için sarsıntıya dirençlidir.
+                    </p>
+                    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 1rem 0;">
+                    <p><strong>S2. Switch ile Router arasındaki görev farkını OSI katmanlarını göz önüne alarak açıklayınız.</strong></p>
+                    <p><strong>Cevap:</strong> Switch Katman 2'de (Veri Bağlantı) MAC adreslerini kullanarak veriyi aynı yerel ağdaki (LAN) hedefe iletir. Router ise Katman 3'te (Ağ) IP adreslerini kullanarak farklı ağlar (LAN ve WAN) arasında rotalama yapar.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Bilgisayar Donanımı ve Ağ Sistemleri İnteraktif Öğrenme Platformu</p>
+    </footer>
+
+    <script>
+        function switchTab(sectionId, clickedElement) {
+            // Tüm içerik bölümlerini gizle
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            // Tıklanan bölümü aç
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Sol menüdeki aktif buton sınıfını güncelle
+            const menuLinks = document.querySelectorAll('ul.menu a');
+            menuLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            clickedElement.classList.add('active');
+        }
+
+        function checkAnswer(questionId, selectedOption, correctOption) {
+            const questionElement = document.getElementById(questionId);
+            const labels = questionElement.querySelectorAll('.options-list label');
+            const explanationBox = questionElement.querySelector('.explanation');
+
+            labels.forEach(label => {
+                label.classList.remove('correct', 'incorrect');
+            });
+
+            if (selectedOption === correctOption) {
+                labels.forEach(label => {
+                    if (label.innerText.trim().startsWith(selectedOption)) {
+                        label.classList.add('correct');
+                    }
+                });
+                if (explanationBox) explanationBox.style.display = 'none';
+            } else {
+                labels.forEach(label => {
+                    if (label.innerText.trim().startsWith(selectedOption)) {
+                        label.classList.add('incorrect');
+                    }
+                    if (label.innerText.trim().startsWith(correctOption)) {
+                        label.classList.add('correct');
+                    }
+                });
+                if (explanationBox) explanationBox.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
